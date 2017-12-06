@@ -5,6 +5,12 @@ fun createKRuleBook(init: KRuleBookBuilder<Any>.() -> Unit): KRuleBook<Any> {
     return createKRuleBook<Any>(init)
 }
 
+fun <T> createKRuleBook(definition: KRuleBookDefinition<T>): KRuleBook<T> {
+    val builder = KRuleBookBuilder<T>()
+    definition.build(builder)
+    return builder.build()
+}
+
 fun <T> createKRuleBook(init: KRuleBookBuilder<T>.() -> Unit): KRuleBook<T> {
     val builder = KRuleBookBuilder<T>()
     builder.init()

@@ -1,5 +1,6 @@
 package com.github.albertosh.krule
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -9,28 +10,28 @@ internal class KRuleBuilderTest {
 
     @Test
     internal fun `default rule is always executed`() {
-        val action = mock<() -> Unit>()
+        val action = mock<FactBook<Any>.() -> Unit>()
         val rule = KRuleBuilder<Any>()
                 .action(action)
                 .build()
         rule.execute()
-        verify(action).invoke()
+        verify(action).invoke(any())
     }
 
     @Test
     internal fun `execution can be disabled`() {
-        val action = mock<() -> Unit>()
+        val action = mock<FactBook<Any>.() -> Unit>()
         val rule = KRuleBuilder<Any>()
                 .`when`(false)
                 .action(action)
                 .build()
         rule.execute()
-        verify(action, times(0)).invoke()
+        verify(action, times(0)).invoke(any())
     }
 
     @Test
     internal fun `all actions are executed`() {
-        val action = mock<() -> Unit>()
+        val action = mock<FactBook<Any>.() -> Unit>()
 
         val ruleBuilder = KRuleBuilder<Any>()
 
@@ -40,7 +41,7 @@ internal class KRuleBuilderTest {
 
         val rule = ruleBuilder.build()
         rule.execute()
-        verify(action, times(10)).invoke()
+        verify(action, times(10)).invoke(any())
     }
 
 }

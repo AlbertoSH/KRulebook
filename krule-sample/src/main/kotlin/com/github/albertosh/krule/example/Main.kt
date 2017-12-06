@@ -1,4 +1,7 @@
-package com.github.albertosh.krule
+package com.github.albertosh.krule.example
+
+import com.github.albertosh.krule.createFactBook
+import com.github.albertosh.krule.createKRuleBook
 
 
 fun main(args: Array<String>) {
@@ -41,3 +44,4 @@ fun runHelloWorldWithFactsExample() {
 
     rulebook.execute(factBook)
 }
+
