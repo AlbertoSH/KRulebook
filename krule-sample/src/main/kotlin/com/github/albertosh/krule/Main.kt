@@ -1,32 +1,28 @@
 package com.github.albertosh.krule
 
-enum class Key {
-    KEY_1, KEY_2, KEY_3
-}
 
 fun main(args: Array<String>) {
 
-    val facts = createFactBook<Key> {
-        withKey(Key.KEY_1) { 1 }
-        withKey(Key.KEY_2, 2)
-        withKey<Int>(Key.KEY_3)(3)
+    val facts = createFactBook<String> {
+        withKey("hello", "Hello ")
+        withKey("world", " World")
     }
 
-    val rulebook = createKRuleBook<Key> {
+    val rulebook = createKRuleBook<String> {
         withRule {
             `when` {
-                fact(Key.KEY_1) `is` 1
+                hasFact("hello")
             }
-            action {
-                println("Do")
+            using("hello") {
+                println(it)
             }
         }
         withRule {
             `when` {
-                Key.KEY_2 `is` 3
+                hasFact("world")
             }
-            action {
-                println("Don't")
+            using("world") {
+                println(it)
             }
         }
     }

@@ -11,7 +11,7 @@ sealed class Fact<out T, V>(
 
 internal class SpecifiedFact<out T, V>(
         key: T,
-        private val value: () -> V
+        val value: () -> V
 ) : Fact<T, V>(key) {
 
     private val calculatedValue: V by lazy {

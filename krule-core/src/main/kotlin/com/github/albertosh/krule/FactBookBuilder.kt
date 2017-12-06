@@ -16,11 +16,11 @@ class FactBookBuilder<T> {
         }
     }
 
-    fun <R> withKey(key: T, value: R) {
+    fun <R> withKey(key: T, value: R?) {
         withKey(key, { value })
     }
 
-    fun <R> withKey(key: T, value: () -> R) {
+    fun <R> withKey(key: T, value: (() -> R?)) {
         facts.put(key, SpecifiedFact(key, value))
     }
 
