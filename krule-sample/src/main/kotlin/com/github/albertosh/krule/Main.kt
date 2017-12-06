@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
                 hasFact("hello")
             }
             using("hello") {
-                println(it)
+                print(it)
             }
         }
         withRule {

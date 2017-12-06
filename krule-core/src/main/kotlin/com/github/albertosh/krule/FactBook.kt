@@ -9,14 +9,17 @@ class FactBook<T> internal constructor(
         return facts[key] ?: UnspecifiedFact(key)
     }
 
+    operator fun get(key: T) = fact(key)
+
+
     fun hasFact(key: T): Boolean = hasFact { key }
 
     fun hasFact(key: () -> T): Boolean = facts[key()] != null
 
     fun using(key: T, action: (Any?) -> Unit) {
-        val value = facts[key]
-        value?.let {
-            action(it.value())
+        val fact = facts[key]
+        fact?.let {
+            action(it.value)
         }
     }
 
