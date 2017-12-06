@@ -1,5 +1,10 @@
 package com.github.albertosh.krule
 
+@JvmName("createGenericFactBook")
+fun createFactBook(init: FactBookBuilder<Any>.() -> Unit): FactBook<Any> {
+    return createFactBook<Any>(init)
+}
+
 fun <T> createFactBook(init: FactBookBuilder<T>.() -> Unit): FactBook<T> {
     val builder = FactBookBuilder<T>()
     builder.init()

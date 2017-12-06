@@ -18,7 +18,7 @@ class KRuleBuilder<T> {
     fun using(key: T, action: (Any?) -> Unit): KRuleBuilder<T> {
         val generated = object : (FactBook<T>) -> Unit {
             override fun invoke(p1: FactBook<T>) {
-                p1.using(key) { action(it as Any?) }
+                p1.using(key) { action(it) }
             }
         }
 

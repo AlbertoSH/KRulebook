@@ -1,5 +1,10 @@
 package com.github.albertosh.krule
 
+@JvmName("createGenericKRuleBook")
+fun createKRuleBook(init: KRuleBookBuilder<Any>.() -> Unit): KRuleBook<Any> {
+    return createKRuleBook<Any>(init)
+}
+
 fun <T> createKRuleBook(init: KRuleBookBuilder<T>.() -> Unit): KRuleBook<T> {
     val builder = KRuleBookBuilder<T>()
     builder.init()
