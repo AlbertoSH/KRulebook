@@ -19,16 +19,27 @@ fun <T, R> createKRuleBook(init: KRuleBookBuilder<T, R>.() -> Unit): KRuleBook<T
 
 class KRuleBookBuilder<T, R> {
 
-    private val rules = mutableListOf<KRule<T, R>>()
+    private val rules = mutableListOf<KRule<T, R, *>>()
     private val result : Result<R> = Result(null)
 
     fun build(): KRuleBook<T, R> {
         return KRuleBook(rules, result)
     }
 
-    fun withRule(init: KRuleBuilder<T, R>.() -> Unit): KRuleBookBuilder<T, R> {
-        val builder = KRuleBuilder<T, R>()
+    fun withDefaultResult(result: () -> R): KRuleBookBuilder<T, R> {
+        this.result.value = result()
+        return this
+    }
+
+    @JvmName("withRuleWithGenericId")
+    fun withRule(id: Any? = null, init: KRuleBuilder<T, R, *>.() -> Unit): KRuleBookBuilder<T, R> {
+        return withRule<Any>(id, init)
+    }
+
+    fun <Id> withRule(id: Id? = null, init: KRuleBuilder<T, R, Id>.() -> Unit): KRuleBookBuilder<T, R> {
+        val builder = KRuleBuilder<T, R, Id>()
         builder.result = result
+        builder.id = id
         builder.init()
         val rule = builder.build()
         rules.add(rule)

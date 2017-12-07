@@ -9,6 +9,8 @@ fun main(args: Array<String>) {
     runHelloWorldExample()
     runHelloWorldWithFactsExample()
     runExampleWithResult()
+    runExampleStopping()
+    runComplexScenario()
 }
 
 fun runHelloWorldExample() {
@@ -59,5 +61,24 @@ fun runExampleWithResult() {
     val result = rulebook.execute(factBook)
 
     println(result)
+}
+
+fun runExampleStopping() {
+    println("\n\nExample Stopping")
+
+    val rulebook = createKRuleBook {
+        withRule(1) {
+            action { println("Do it") }
+        }
+        withRule(2) {
+            action { println("And stop!") }
+            stop()
+        }
+        withRule("Don't") {
+            action { println("Don't do it") }
+        }
+    }
+
+    rulebook.execute()
 }
 
