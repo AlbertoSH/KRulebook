@@ -3,14 +3,13 @@ package com.github.albertosh.krule.example
 import com.github.albertosh.krule.createFactBook
 import com.github.albertosh.krule.createKRuleBook
 
-
 fun main(args: Array<String>) {
-
     runHelloWorldExample()
     runHelloWorldWithFactsExample()
     runExampleWithResult()
     runExampleStopping()
     runComplexScenario()
+    runPreAndPostActionsExample()
 }
 
 fun runHelloWorldExample() {
@@ -82,3 +81,21 @@ fun runExampleStopping() {
     rulebook.execute()
 }
 
+fun runPreAndPostActionsExample() {
+    println("\n\nPre and post actions example")
+    val rulebook = createKRuleBook {
+        withRule {
+            preAction { println("I'm always executed") }
+            `when`(false)
+            postAction { println("Even when the rule is not :)") }
+        }
+        withRule {
+            action { println("I'm executed!") }
+            stop()
+            action { println("I'm not :(") }
+            postAction { println("But post actions are always executed ;)") }
+        }
+    }
+
+    rulebook.execute()
+}

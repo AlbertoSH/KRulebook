@@ -24,7 +24,6 @@ junitPlatform {
 repositories {
     mavenCentral()
     maven { url "http://dl.bintray.com/jetbrains/spek" }
-
 }
 
 dependencies {

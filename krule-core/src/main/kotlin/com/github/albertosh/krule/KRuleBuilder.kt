@@ -4,7 +4,9 @@ class KRuleBuilder<T, R, Id> {
 
     internal var id: Id? = null
     private var `when`: (FactBook<T>) -> Boolean = { true }
+    private val preActions = mutableListOf<FactBook<T>.() -> Unit>()
     private val actions = mutableListOf<FactBook<T>.() -> Unit>()
+    private val postActions = mutableListOf<FactBook<T>.() -> Unit>()
     internal var result : Result<R>? = null
     private var setResult: (FactBook<T>.() -> R)? = null
     private var combineResult: ((R?, R) -> R)? = null
@@ -90,6 +92,16 @@ class KRuleBuilder<T, R, Id> {
         return this
     }
 
+    fun preAction(action: FactBook<T>.() -> Unit): KRuleBuilder<T, R, Id> {
+        this.preActions.add(action)
+        return this
+    }
+
+    fun postAction(action: FactBook<T>.() -> Unit): KRuleBuilder<T, R, Id> {
+        this.postActions.add(action)
+        return this
+    }
+
     fun stop(): KRuleBuilder<T, R, Id> {
         val generated = object : (FactBook<T>) -> Unit {
             override fun invoke(p1: FactBook<T>) {
@@ -104,7 +116,9 @@ class KRuleBuilder<T, R, Id> {
         return KRule(
                 id,
                 `when`,
+                preActions,
                 actions.toList(),
+                postActions,
                 result,
                 setResult,
                 combineResult)
