@@ -8,6 +8,7 @@ fun main(args: Array<String>) {
 
     runHelloWorldExample()
     runHelloWorldWithFactsExample()
+    runExampleWithResult()
 }
 
 fun runHelloWorldExample() {
@@ -38,10 +39,25 @@ fun runHelloWorldWithFactsExample() {
         }
         withRule {
             `when` { hasFact("world") }
-            using("world") { print(it) }
+            using("world") { println(it) }
         }
     }
 
     rulebook.execute(factBook)
+}
+
+fun runExampleWithResult() {
+    println("\n\nExample with result")
+
+    val factBook = createFactBook { withSingleValue(2) }
+    val rulebook = createKRuleBook {
+        withRule {
+            result { factValue() }
+        }
+    }
+
+    val result = rulebook.execute(factBook)
+
+    println(result)
 }
 

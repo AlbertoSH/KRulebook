@@ -1,9 +1,12 @@
 package com.github.albertosh.krule
 
-
 class FactBook<T> internal constructor(
         private val facts: Map<T, SpecifiedFact<T, *>> = mapOf()
 ) {
+
+    companion object {
+        val singleKey = Any()
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun fact(): Fact<T, *> =

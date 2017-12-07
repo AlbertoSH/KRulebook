@@ -21,12 +21,17 @@ class FactBookBuilder<T> {
         }
     }
 
-    fun <R> withKey(key: T, value: R?) {
-        withKey(key, { value })
+    fun <R> withKey(key: T, value: R?): FactBookBuilder<T> {
+        return withKey(key, { value })
     }
 
-    fun <R> withKey(key: T, value: (() -> R?)) {
+    fun <R> withKey(key: T, value: (() -> R?)): FactBookBuilder<T> {
         facts.put(key, SpecifiedFact(key, value))
+        return this
+    }
+
+    fun <R> withSingleValue(value: R?): FactBookBuilder<T> {
+        return withKey(FactBook.singleKey as T, { value })
     }
 
     fun build(): FactBook<T> = FactBook(facts)

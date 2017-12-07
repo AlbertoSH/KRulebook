@@ -11,7 +11,7 @@ internal class KRuleBuilderTest {
     @Test
     internal fun `default rule is always executed`() {
         val action = mock<FactBook<Any>.() -> Unit>()
-        val rule = KRuleBuilder<Any>()
+        val rule = KRuleBuilder<Any, Any>()
                 .action(action)
                 .build()
         rule.execute()
@@ -21,7 +21,7 @@ internal class KRuleBuilderTest {
     @Test
     internal fun `execution can be disabled`() {
         val action = mock<FactBook<Any>.() -> Unit>()
-        val rule = KRuleBuilder<Any>()
+        val rule = KRuleBuilder<Any, Any>()
                 .`when`(false)
                 .action(action)
                 .build()
@@ -33,7 +33,7 @@ internal class KRuleBuilderTest {
     internal fun `all actions are executed`() {
         val action = mock<FactBook<Any>.() -> Unit>()
 
-        val ruleBuilder = KRuleBuilder<Any>()
+        val ruleBuilder = KRuleBuilder<Any, Any>()
 
         (1..10)
                 .forEach { ruleBuilder.action(action) }
